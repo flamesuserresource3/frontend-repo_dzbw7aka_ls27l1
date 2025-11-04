@@ -2,6 +2,8 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Features from './components/Features';
 import PublicQuizzes from './components/PublicQuizzes';
+import Login from './components/Login';
+import Register from './components/Register';
 
 function DecorativeBackground() {
   return (
@@ -12,17 +14,34 @@ function DecorativeBackground() {
   );
 }
 
+function usePathname() {
+  const path = typeof window !== 'undefined' ? window.location.pathname : '/';
+  return path;
+}
+
 export default function App() {
+  const path = usePathname();
+
+  const showLanding = path === '/' || path === '/index.html';
+  const showLogin = path === '/login';
+  const showRegister = path === '/register';
+
   return (
     <div className="min-h-screen bg-white text-cyan-900">
       <DecorativeBackground />
       <Navbar />
       <main>
-        <Hero />
-        <Features />
-        <PublicQuizzes />
+        {showLanding && (
+          <>
+            <Hero />
+            <Features />
+            <PublicQuizzes />
+          </>
+        )}
+        {showLogin && <Login />}
+        {showRegister && <Register />}
       </main>
-      <footer className="border-t border-cyan-100 bg-white/70 backdrop-blur">
+      <footer className="border-t border-cyan-100 bg-white/70 backdrop-blur mt-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-sm text-cyan-700/80 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p>
             © {new Date().getFullYear()} QuizSpark — made for playful learning.
